@@ -23,13 +23,19 @@ CastedSpell((CHARACTER)_Player, "Shout_OneTimeRespec", _, _, _)
 AND
 DB_PartyMembers(_Player)
 THEN
-DebugText(_Player, "One time respec activated!");
+//DebugText(_Player, "One time respec activated!");
 StartRespec(_Player);
 
 IF
 RespecCompleted((CHARACTER)_Player)
 THEN
-DebugText(_Player, "One time respec used, removing spell!");
+//DebugText(_Player, "One time respec used, removing spell!");
+RemoveSpell(_Player, "Shout_OneTimeRespec", 0);
+
+IF
+LeveledUp((CHARACTER)_Player)
+THEN
+//DebugText(_Player, "Leveled up, removing spell!");
 RemoveSpell(_Player, "Shout_OneTimeRespec", 0);
 EXITSECTION
 
