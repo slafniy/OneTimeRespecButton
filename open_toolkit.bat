@@ -1,5 +1,5 @@
 set project=OneTimeRespecButton
-set toolkit_path="D:\SteamLibrary\steamapps\common\Baldurs Gate 3 Toolkit\"
+set steam_exe_path="C:\Program Files (x86)\Steam\steam.exe"
+set toolkit_id=2934770
 
-cd /D %toolkit_path%
-%toolkit_path%\Glasses.exe -project %project% -lvl Basic_Level_A
+%steam_exe_path% steam://rungameid/%toolkit_id%/-project %project% -lvl Basic_Level_A/
