@@ -1,7 +1,7 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
-
+DB_OTR_TimerPrefix("AddButtonTimer_");
 KBSECTION
 IF
 DB_PartyMembers(_Character)
@@ -14,9 +14,14 @@ GUIDToString(_Character, _onlyOnceStr1)
 AND
 Concatenate(_onlyOnceStr1, "OneTimeRespecButtonAdd", _onlyOnceStr)
 AND
+DB_OTR_TimerPrefix(_TimerPrefix)
+AND
+ConcatenateGUID(_TimerPrefix, _Character, _AddButtonTimerStr)
+AND
 QRY_OnlyOnce(_onlyOnceStr)
 THEN
 AddSpell(_Character, "Shout_OneTimeRespec", 0, 0);
+TimerLaunch(_AddButtonTimerStr, 1000);  // Fix for https://github.com/slafniy/OneTimeRespecButton/issues/1
 
 IF
 CastedSpell((CHARACTER)_Player, "Shout_OneTimeRespec", _, _, _)
@@ -34,6 +39,12 @@ RemoveSpell(_Player, "Shout_OneTimeRespec", 0);
 
 IF
 LeveledUp((CHARACTER)_Player)
+AND
+DB_OTR_TimerPrefix(_TimerPrefix)
+AND
+ConcatenateGUID(_TimerPrefix, _Player, _TimerStr)
+AND
+TimerExists(_TimerStr, 0)  // To prevent instant button removing if joined party member instantly levels up
 THEN
 //DebugText(_Player, "Leveled up, removing spell!");
 RemoveSpell(_Player, "Shout_OneTimeRespec", 0);
